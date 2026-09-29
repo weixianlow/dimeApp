@@ -72,3 +72,35 @@ public extension CurrencyCode {
         "BHD", "IQD", "JOD", "KWD", "LYD", "OMR", "TND"
     ]
 }
+
+public extension CurrencyCode {
+    /// Whether this is a currency the app is prepared to handle.
+    ///
+    /// Used when reading a three-letter token out of free text: without a known-good list,
+    /// a merchant name like "BAR" or "GAS" would be mistaken for a currency code.
+    var isRecognised: Bool { Self.recognised.contains(rawValue) }
+
+    /// Deliberately a fixed list rather than everything ISO 4217 has ever minted. It needs
+    /// to cover the currencies the rate provider quotes and the places the user travels,
+    /// and nothing else — every extra entry is another way for text parsing to go wrong.
+    static let recognised: Set<String> = [
+        // Southeast Asia
+        "MYR", "SGD", "THB", "IDR", "VND", "PHP", "KHR", "LAK", "MMK", "BND",
+        // East Asia
+        "JPY", "KRW", "CNY", "HKD", "TWD", "MOP",
+        // South and Central Asia
+        "INR", "LKR", "BDT", "PKR", "NPR", "KZT",
+        // Middle East
+        "AED", "SAR", "QAR", "KWD", "BHD", "OMR", "ILS", "TRY", "JOD", "IQD", "LYD", "TND", "YER",
+        // Oceania
+        "AUD", "NZD", "FJD", "PGK",
+        // Europe
+        "EUR", "GBP", "CHF", "NOK", "SEK", "DKK", "PLN", "CZK", "HUF", "RON", "BGN", "ISK",
+        "RUB", "UAH",
+        // Americas
+        "USD", "CAD", "MXN", "BRL", "ARS", "CLP", "COP", "PEN", "UYU",
+        // Africa
+        "ZAR", "EGP", "MAD", "KES", "NGN", "TZS", "UGX", "RWF", "BIF", "DJF", "GNF", "KMF",
+        "XAF", "XOF", "XPF", "PYG", "VUV"
+    ]
+}
